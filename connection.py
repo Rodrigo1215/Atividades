@@ -32,7 +32,7 @@ def incluir_usuario():
     cursor.execute("""INSERT INTO tbl_user(user_name, user_username, user_password) VALUES(%s, %s, %s)""", (nome, email, senha))
     conexao.commit()
     cursor.close()
-    conexao.close()
+    
     return render_template('connection.html')
     
 
