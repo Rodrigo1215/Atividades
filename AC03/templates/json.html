@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-json.css')}}">
+    <title>Json</title>
+  </head>
+  <body>
+    <form id="name_form">
+      <label class="form">Nome: </label>
+      <input type="text" name="nome" placeholder="Digite seu nome" />
+      <label class="form">E-mail: </label>
+      <input type="text" name="email" placeholder="Digite seu E-mail" />
+      <div class="input">
+        <button type="submit" value="submit">
+            Enviar
+        </button>
+      </div>
+    </form>
+    <input type="text" id="resp" name="resp" size="50" placeholder="Resultado">
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+      $("#name_form").submit(function (e) {
+        e.preventDefault();
+
+        var formobj = {
+          nome: $("[name=nome]").val(),
+          email: $("[name=email]").val(),
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "/api/json",
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(formobj),
+          success: function (callback) {
+            console.log(callback);
+            $("#resp").val(
+              callback.nome.toUpperCase() + " | " + callback.email.toUpperCase()
+            );
+            $("[name=nome]").val("");
+            $("[name=email]").val("");
+          },
+          error: function () {
+            $(this).html("error!");
+          },
+        });
+      });
+    </script>
+  </input>
+</html>
